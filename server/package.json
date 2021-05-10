@@ -4,7 +4,8 @@
   "description": "Refactoring exercise for Node",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,8 @@
     "express": "^4.15.3",
     "handlebars": "^4.0.10",
     "nedb": "^1.8.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.26.0"
   }
 }
