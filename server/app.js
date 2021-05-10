@@ -68,14 +68,14 @@ const handler = async (req, res) => {
   res.status(200).send(rendered);
 };
 
-app.get(["/everyone", "/"], handler);
-
-app.get("/male", handler);
-
-app.get("/female", handler);
-
-app.get("/under30", handler);
-
-app.get("/over30", handler);
+const validPaths = [
+  "/everyone",
+  "/",
+  "/male",
+  "/female",
+  "/under30",
+  "/over30",
+];
+app.get(validPaths, handler);
 
 module.exports = app;
