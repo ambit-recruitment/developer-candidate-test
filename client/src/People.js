@@ -36,6 +36,8 @@ function People() {
       setFilter={setFilter}
     />
   ));
+  const appliedFilter = <h5>Applied Filter: {filter}</h5>;
+
   const peopleList = peopleData.filter(FILTER_MAP[filter]).map((people) => (
     <tr>
       <td>{people.name}</td>
@@ -52,6 +54,8 @@ function People() {
       ) : (
         <div>
           {filterList}
+          <br />
+          {appliedFilter}
           <table>
             <tr>
               <th>Name</th>
