@@ -56,7 +56,7 @@ const generateQueryParam = (path) => {
   return queryParam;
 };
 
-app.get(["/everyone", "/"], async (req, res) => {
+const handler = async (req, res) => {
   const templateData = await fsPromises.readFile("everyone.hbs", "utf8");
   const template = handlebars.compile(templateData);
   const queryParam = generateQueryParam(req.path);
@@ -66,54 +66,16 @@ app.get(["/everyone", "/"], async (req, res) => {
   });
   res.contentType("text/html");
   res.status(200).send(rendered);
-});
+};
 
-app.get("/male", async (req, res) => {
-  const templateData = await fsPromises.readFile("everyone.hbs", "utf8");
-  const template = handlebars.compile(templateData);
-  const queryParam = generateQueryParam(req.path);
-  const docs = await findPromise(db, queryParam);
-  const rendered = template({
-    people: docs,
-  });
-  res.contentType("text/html");
-  res.status(200).send(rendered);
-});
+app.get(["/everyone", "/"], handler);
 
-app.get("/female", async (req, res) => {
-  const templateData = await fsPromises.readFile("everyone.hbs", "utf8");
-  const template = handlebars.compile(templateData);
-  const queryParam = generateQueryParam(req.path);
-  const docs = await findPromise(db, queryParam);
-  const rendered = template({
-    people: docs,
-  });
-  res.contentType("text/html");
-  res.status(200).send(rendered);
-});
+app.get("/male", handler);
 
-app.get("/under30", async (req, res) => {
-  const templateData = await fsPromises.readFile("everyone.hbs", "utf8");
-  const template = handlebars.compile(templateData);
-  const queryParam = generateQueryParam(req.path);
-  const docs = await findPromise(db, queryParam);
-  const rendered = template({
-    people: docs,
-  });
-  res.contentType("text/html");
-  res.status(200).send(rendered);
-});
+app.get("/female", handler);
 
-app.get("/over30", async (req, res) => {
-  const templateData = await fsPromises.readFile("everyone.hbs", "utf8");
-  const template = handlebars.compile(templateData);
-  const queryParam = generateQueryParam(req.path);
-  const docs = await findPromise(db, queryParam);
-  const rendered = template({
-    people: docs,
-  });
-  res.contentType("text/html");
-  res.status(200).send(rendered);
-});
+app.get("/under30", handler);
+
+app.get("/over30", handler);
 
 module.exports = app;
