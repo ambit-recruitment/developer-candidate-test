@@ -1,10 +1,17 @@
+import { useDispatch } from "react-redux";
+import { applyFilter } from "./actions";
+
 function FilterButton(props) {
+  const dispatch = useDispatch();
+
   return (
     <button
       type="button"
       className="btn toggle-btn"
       aria-pressed={props.isPressed}
-      onClick={() => props.setFilter(props.name)}
+      onClick={() => {
+        dispatch(applyFilter(props.name));
+      }}
     >
       <span>{props.name}</span>
     </button>
