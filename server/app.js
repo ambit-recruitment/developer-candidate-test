@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 
+const cors = require("cors");
+
 const loadDocs = require("./loadDocs");
 const fsPromises = require("fs").promises;
 
@@ -70,5 +72,10 @@ const validPaths = [
   "/over30",
 ];
 app.get(validPaths, handler);
+
+app.get("/api", cors(), async (req, res) => {
+  const docs = await loadDocs({});
+  res.json({ people: docs });
+});
 
 module.exports = app;
