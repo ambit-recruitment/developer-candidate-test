@@ -43,11 +43,17 @@ const generateQueryParam = (path) => {
   return queryParam;
 };
 
+const TEMPLATE_FILE = "everyone.hbs";
+
+const loadTemplate = async (templateFile = TEMPLATE_FILE) => {
+  const templateData = await fsPromises.readFile(templateFile, "utf8");
+  return handlebars.compile(templateData);
+};
+
 const handler = async (req, res) => {
-  const templateData = await fsPromises.readFile("everyone.hbs", "utf8");
-  const template = handlebars.compile(templateData);
   const queryParam = generateQueryParam(req.path);
   const docs = await loadDocs(queryParam);
+  const template = await loadTemplate();
   const rendered = template({
     people: docs,
   });
