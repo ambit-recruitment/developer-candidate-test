@@ -1,68 +1,62 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import FilterButton from "./FilterButton";
+import { FILTER_NAMES } from './reducer';
+import { loadPeople } from './actions';
 
-const FILTER_MAP = {
-  EveryOne: () => true,
-  Male: (people) => people.gender === "male",
-  Female: (people) => people.gender === "female",
-  Over30: (people) => people.age >= 30,
-  Under30: (people) => people.age < 30,
-};
-
-const FILTER_NAMES = Object.keys(FILTER_MAP);
+import FilterButton from './FilterButton';
 
 function People() {
-  const [peopleData, setPeopleData] = useState([]);
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState("EveryOne");
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("http://localhost:3300/api");
+      const res = await fetch('http://localhost:3300/api');
       const { people } = await res.json();
-      setPeopleData(people);
+      dispatch(loadPeople(people));
       setLoading(false);
     };
 
     fetchData();
-  }, []);
+  }, [dispatch]);
 
   const filterList = FILTER_NAMES.map((name) => (
-    <FilterButton
-      key={name}
-      name={name}
-      isPressed={name === filter}
-      setFilter={setFilter}
-    />
+    <FilterButton key={name} name={name} />
   ));
-  const appliedFilter = <h5>Applied Filter: {filter}</h5>;
+  const appliedFilters = useSelector((state) => state.filters).join(' and ');
 
-  const peopleList = peopleData.filter(FILTER_MAP[filter]).map((people) => (
-    <tr>
-      <td>{people.name}</td>
-      <td>{people.gender}</td>
-      <td>{people.age}</td>
-    </tr>
-  ));
+  const filteredPeople = useSelector((state) => state.filteredPeople);
+
+  const peopleList =
+    filteredPeople &&
+    filteredPeople.map((people) => (
+      <tr>
+        <td>{people.name}</td>
+        <td>{people.age}</td>
+        <td>{people.gender}</td>
+      </tr>
+    ));
 
   return (
     <div>
       <h2>People</h2>
       {loading ? (
-        "Loading..."
+        'Loading...'
       ) : (
         <div>
           {filterList}
           <br />
-          {appliedFilter}
+          <h5>Applied Filters: {appliedFilters}</h5>
           <table>
-            <tr>
-              <th>Name</th>
-              <th>Gender</th>
-              <th>Age</th>
-            </tr>
-            {peopleList}
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+              </tr>
+            </thead>
+            <tbody>{peopleList}</tbody>
           </table>
         </div>
       )}
