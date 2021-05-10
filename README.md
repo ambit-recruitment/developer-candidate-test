@@ -7,6 +7,7 @@ Query people with filtering conditions on age and gender.
 - Use docker-compose command. [How to install](https://docs.docker.com/compose/install/)
 
 ```
+docker-compose build
 docker-compose up
 ```
 
