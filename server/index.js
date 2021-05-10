@@ -1,18 +1,18 @@
-var express = require("express");
-var app = express();
-var Datastore = require("nedb"),
-  db = new Datastore({
-    filename: "db.json",
-    autoload: true,
-  });
-var fs = require("fs");
-var handlebars = require("handlebars");
+const express = require("express");
+const app = express();
+const Datastore = require("nedb");
+const db = new Datastore({
+  filename: "db.json",
+  autoload: true,
+});
+const fs = require("fs");
+const handlebars = require("handlebars");
 
 app.get(["/everyone", "/"], function (req, res) {
   fs.readFile("everyone.hbs", "utf8", (err, data) => {
-    var template = handlebars.compile(data);
+    const template = handlebars.compile(data);
     db.find({}, {}, (err, docs) => {
-      var rendered = template({
+      const rendered = template({
         people: docs,
       });
       res.contentType("text/html");
@@ -23,14 +23,14 @@ app.get(["/everyone", "/"], function (req, res) {
 
 app.get("/male", function (req, res) {
   fs.readFile("everyone.hbs", "utf8", (err, data) => {
-    var template = handlebars.compile(data);
+    const template = handlebars.compile(data);
     db.find(
       {
         gender: "male",
       },
       {},
       (err, docs) => {
-        var rendered = template({
+        const rendered = template({
           people: docs,
         });
         res.contentType("text/html");
@@ -42,14 +42,14 @@ app.get("/male", function (req, res) {
 
 app.get("/female", function (req, res) {
   fs.readFile("everyone.hbs", "utf8", (err, data) => {
-    var template = handlebars.compile(data);
+    const template = handlebars.compile(data);
     db.find(
       {
         gender: "female",
       },
       {},
       (err, docs) => {
-        var rendered = template({
+        const rendered = template({
           people: docs,
         });
         res.contentType("text/html");
@@ -61,7 +61,7 @@ app.get("/female", function (req, res) {
 
 app.get("/under30", function (req, res) {
   fs.readFile("everyone.hbs", "utf8", (err, data) => {
-    var template = handlebars.compile(data);
+    const template = handlebars.compile(data);
     db.find(
       {
         age: {
@@ -70,7 +70,7 @@ app.get("/under30", function (req, res) {
       },
       {},
       (err, docs) => {
-        var rendered = template({
+        const rendered = template({
           people: docs,
         });
         res.contentType("text/html");
@@ -82,7 +82,7 @@ app.get("/under30", function (req, res) {
 
 app.get("/over30", function (req, res) {
   fs.readFile("everyone.hbs", "utf8", (err, data) => {
-    var template = handlebars.compile(data);
+    const template = handlebars.compile(data);
     db.find(
       {
         age: {
@@ -91,7 +91,7 @@ app.get("/over30", function (req, res) {
       },
       {},
       (err, docs) => {
-        var rendered = template({
+        const rendered = template({
           people: docs,
         });
         res.contentType("text/html");
