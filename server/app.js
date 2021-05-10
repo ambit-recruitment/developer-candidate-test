@@ -1,13 +1,9 @@
 const express = require("express");
 const app = express();
-
 const cors = require("cors");
 
 const loadDocs = require("./loadDocs");
-const fsPromises = require("fs").promises;
-
-const handlebars = require("handlebars");
-
+const loadTemplate = require("./loadTemplate");
 const generateQueryParam = (path) => {
   let queryParam;
   switch (path) {
@@ -43,13 +39,6 @@ const generateQueryParam = (path) => {
       throw new Error("Unsupported query");
   }
   return queryParam;
-};
-
-const TEMPLATE_FILE = "everyone.hbs";
-
-const loadTemplate = async (templateFile = TEMPLATE_FILE) => {
-  const templateData = await fsPromises.readFile(templateFile, "utf8");
-  return handlebars.compile(templateData);
 };
 
 const handler = async (req, res) => {
