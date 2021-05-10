@@ -1,7 +1,9 @@
-export const FILTER_MAP = {
+import { LOAD_PEOPLE_ACTION, APPLY_FILTER_ACTION } from './actions';
+
+const FILTER_MAP = {
   EveryOne: () => true,
-  Male: (people) => people.gender === "male",
-  Female: (people) => people.gender === "female",
+  Male: (people) => people.gender === 'male',
+  Female: (people) => people.gender === 'female',
   Over30: (people) => people.age >= 30,
   Under30: (people) => people.age < 30,
 };
@@ -15,14 +17,14 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case "people":
+    case LOAD_PEOPLE_ACTION:
       return {
         ...initialState,
         people: action.payload.people,
         filteredPeople: action.payload.people,
       };
-    case "filter":
-      if (action.payload.filter === "EveryOne") {
+    case APPLY_FILTER_ACTION:
+      if (action.payload.filter === 'EveryOne') {
         return {
           ...state,
           filters: [action.payload.filter],

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { FILTER_NAMES } from './reducer';
-import { loadPeople } from './actions';
+import { FILTER_NAMES, loadPeople } from './store';
 
 import FilterButton from './FilterButton';
 

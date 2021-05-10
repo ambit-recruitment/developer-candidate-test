@@ -1,5 +1,5 @@
-import { useDispatch } from "react-redux";
-import { applyFilter } from "./actions";
+import { useDispatch } from 'react-redux';
+import { applyFilter } from './store';
 
 function FilterButton(props) {
   const dispatch = useDispatch();
