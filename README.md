@@ -11,12 +11,12 @@ The exercise is to:
 
 The application runs correctly, but there's a lot of duplication, the rendering is all server-side, and its filtering use case is limited. To run the existing solution:
 
-``` bash
+```bash
 npm install
 npm start
 ```
 
-Browse to [http://localhost:3000](http://localhost:3000)
+Browse to [http://localhost:3300](http://localhost:3300)
 
 ## Important - the requirements
 
