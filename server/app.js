@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 
-const findPromise = require("./db");
+const loadDocs = require("./loadDocs");
 const fsPromises = require("fs").promises;
 
 const handlebars = require("handlebars");
@@ -47,7 +47,7 @@ const handler = async (req, res) => {
   const templateData = await fsPromises.readFile("everyone.hbs", "utf8");
   const template = handlebars.compile(templateData);
   const queryParam = generateQueryParam(req.path);
-  const docs = await findPromise(queryParam);
+  const docs = await loadDocs(queryParam);
   const rendered = template({
     people: docs,
   });
