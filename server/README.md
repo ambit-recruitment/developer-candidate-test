@@ -1,11 +1,16 @@
 # How to run
 
+- Through npm
+
 ```
 npm install
 npm run start
 ```
 
-Through docker
+Browse to [http://localhost:3300](http://localhost:3300)
+Browse to [http://localhost:3300/api](http://localhost:3300/api) for the API
+
+- Through docker
 
 ```
 docker build . -t <image-name>
