@@ -1,10 +1,20 @@
 const express = require("express");
 const app = express();
+
 const Datastore = require("nedb");
 const db = new Datastore({
   filename: "db.json",
   autoload: true,
 });
+const findPromise = (db, queryParam) => {
+  return new Promise((resolve, reject) => {
+    db.find(queryParam, {}, (err, data) => {
+      if (err) reject(err);
+      resolve(data);
+    });
+  });
+};
+
 const fsPromises = require("fs").promises;
 
 const handlebars = require("handlebars");
@@ -47,72 +57,67 @@ const generateQueryParam = (path) => {
 };
 
 app.get(["/everyone", "/"], async (req, res) => {
-  await fsPromises.readFile("everyone.hbs", "utf8").then((data) => {
+  await fsPromises.readFile("everyone.hbs", "utf8").then(async (data) => {
     const template = handlebars.compile(data);
     const queryParam = generateQueryParam(req.path);
-    db.find(queryParam, {}, (err, docs) => {
-      const rendered = template({
-        people: docs,
-      });
-      res.contentType("text/html");
-      res.status(200).send(rendered);
+    const docs = await findPromise(db, queryParam);
+    const rendered = template({
+      people: docs,
     });
+    res.contentType("text/html");
+    res.status(200).send(rendered);
   });
 });
 
 app.get("/male", async (req, res) => {
-  await fsPromises.readFile("everyone.hbs", "utf8").then((data) => {
+  await fsPromises.readFile("everyone.hbs", "utf8").then(async (data) => {
     const template = handlebars.compile(data);
     const queryParam = generateQueryParam(req.path);
-    db.find(queryParam, {}, (err, docs) => {
-      const rendered = template({
-        people: docs,
-      });
-      res.contentType("text/html");
-      res.status(200).send(rendered);
+    const docs = await findPromise(db, queryParam);
+    const rendered = template({
+      people: docs,
     });
+    res.contentType("text/html");
+    res.status(200).send(rendered);
   });
 });
 
 app.get("/female", async (req, res) => {
-  await fsPromises.readFile("everyone.hbs", "utf8").then((data) => {
+  await fsPromises.readFile("everyone.hbs", "utf8").then(async (data) => {
     const template = handlebars.compile(data);
     const queryParam = generateQueryParam(req.path);
-    db.find(queryParam, {}, (err, docs) => {
-      const rendered = template({
-        people: docs,
-      });
-      res.contentType("text/html");
-      res.status(200).send(rendered);
+    const docs = await findPromise(db, queryParam);
+    const rendered = template({
+      people: docs,
     });
+    res.contentType("text/html");
+    res.status(200).send(rendered);
   });
 });
 
 app.get("/under30", async (req, res) => {
-  await fsPromises.readFile("everyone.hbs", "utf8").then((data) => {
+  await fsPromises.readFile("everyone.hbs", "utf8").then(async (data) => {
     const template = handlebars.compile(data);
     const queryParam = generateQueryParam(req.path);
-    db.find(queryParam, {}, (err, docs) => {
-      const rendered = template({
-        people: docs,
-      });
-      res.contentType("text/html");
-      res.status(200).send(rendered);
+    const docs = await findPromise(db, queryParam);
+    const rendered = template({
+      people: docs,
     });
+    res.contentType("text/html");
+    res.status(200).send(rendered);
   });
 });
 
 app.get("/over30", async (req, res) => {
-  await fsPromises.readFile("everyone.hbs", "utf8").then((data) => {
+  await fsPromises.readFile("everyone.hbs", "utf8").then(async (data) => {
     const template = handlebars.compile(data);
     const queryParam = generateQueryParam(req.path);
-    db.find(queryParam, {}, (err, docs) => {
-      const rendered = template({
-        people: docs,
-      });
-      res.contentType("text/html");
-      res.status(200).send(rendered);
+    const docs = await findPromise(db, queryParam);
+    const rendered = template({
+      people: docs,
     });
+    res.contentType("text/html");
+    res.status(200).send(rendered);
   });
 });
 
